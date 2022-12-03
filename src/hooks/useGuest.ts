@@ -7,6 +7,7 @@ type Guest = {
   id: string;
   name: string;
   buzzed: Timestamp | null;
+  blocked: boolean;
   score: number;
 };
 
@@ -19,7 +20,7 @@ export default function useGuest() {
   const exists = !!guest?.name;
   useQuery(
     "guest",
-    () => setDoc(guestRef, { name: randomMoniker(), buzzed: null, score: 0 }),
+    () => setDoc(guestRef, { name: randomMoniker(), buzzed: null, score: 0, blocked: false }),
     { enabled: !exists }
   );
   return guest as Guest;

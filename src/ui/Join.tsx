@@ -77,7 +77,7 @@ export default function Join() {
 }
 
 function Actions() {
-  const { id: guestId, name, buzzed } = useGuest();
+  const { id: guestId, name, buzzed, blocked } = useGuest();
   const { mutate: buzz } = useBuzz();
   return (
     <>
@@ -87,11 +87,11 @@ function Actions() {
       <Box m={4} />
       <Center>
         <Button
-          colorScheme="pink"
+          colorScheme="red"
           borderRadius="50%"
           h="150px"
           w="150px"
-          isDisabled={!!buzzed}
+          isDisabled={!!buzzed || !!blocked}
           onClick={() => {
             buzz();
             sound.play();

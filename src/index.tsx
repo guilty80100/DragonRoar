@@ -4,13 +4,13 @@ import { FirebaseAppProvider } from "reactfire";
 import { App } from "./ui";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDb6-66w-lHx0tF3z9POa4NR6PZfUb5ExQ",
-  authDomain: "firebuzz-cf583.firebaseapp.com",
-  projectId: "firebuzz-cf583",
-  storageBucket: "firebuzz-cf583.appspot.com",
-  messagingSenderId: "1028563536658",
-  appId: "1:1028563536658:web:a133f1cef29d0206c341cb",
-  measurementId: "G-1XQYL5HPMW",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
 const rootElement = document.getElementById("root");

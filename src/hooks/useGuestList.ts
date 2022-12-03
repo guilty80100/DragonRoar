@@ -6,6 +6,7 @@ type Guest = {
   id: string;
   name: string;
   buzzed: Timestamp | null;
+  blocked: boolean;
   score: number;
 };
 

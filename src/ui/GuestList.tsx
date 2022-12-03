@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { motion, AnimateSharedLayout } from "framer-motion";
-import { AiOutlinePlusCircle } from "react-icons/ai";
-import { List, ListItem } from "@chakra-ui/layout";
+import { AiOutlinePlusCircle, AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
+import { Badge, List, ListItem } from "@chakra-ui/layout";
 import {
   Box,
   Button,
@@ -21,6 +21,7 @@ import {
   SimpleGrid,
   Text,
   useDisclosure,
+  VisuallyHiddenInput,
   VStack,
 } from "@chakra-ui/react";
 import { useUpdateGuest, useGuestList, useIsHost } from "../hooks";
@@ -40,6 +41,7 @@ export default function GuestList() {
 
 function GuestWhoBuzzedList() {
   const guestList = useGuestList();
+  const isHost = useIsHost();
   const items = guestList
     .filter(({ buzzed }) => !!buzzed)
     .sort((a, b) => a.buzzed!.toMillis() - b.buzzed!.toMillis());
@@ -51,7 +53,7 @@ function GuestWhoBuzzedList() {
       </Text>
       <Divider />
       <List spacing={3} overflowX="auto" width="100%">
-        {items.map(({ id, name, buzzed }, idx) => (
+        {items.map(({ id, name, buzzed, score, blocked }, idx) => (
           <motion.div key={id} layoutId={id} transition={spring}>
             <ListItem>
               <Text>{name}</Text>
@@ -61,6 +63,16 @@ function GuestWhoBuzzedList() {
                   ? `+${buzzed?.toMillis()! - items[0]!.buzzed!.toMillis()}  ms`
                   : "🏆"}
               </Text>
+              {isHost ? (
+                <div>
+                  <EditScore id={id} score={score} />
+                  <DisablePlayer id={id} blocked={blocked} />
+                </div>
+              ): (
+                <Text p={1} fontSize="sm" color="pink.500">
+                  {score === 1 ? "1 point" : `${score} points`}
+                </Text>
+              )}
             </ListItem>
           </motion.div>
         ))}
@@ -84,7 +96,7 @@ function GuestWhoDidNotBuzzList() {
       </Text>
       <Divider />
       <List spacing={3} overflowX="auto" width="100%">
-        {items.map(({ id, name, score }) => (
+        {items.map(({ id, name, score, blocked }) => (
           <motion.div key={id} layoutId={id} transition={spring}>
             <ListItem>
               <Text>{name}</Text>
@@ -96,11 +108,44 @@ function GuestWhoDidNotBuzzList() {
                   {score === 1 ? "1 point" : `${score} points`}
                 </Text>
               )}
+              {isHost ? (
+                <DisablePlayer id={id} blocked={blocked} />
+              ) : (
+                <div>
+                  <Badge p={1} fontSize="sm" colorScheme={blocked === true ? "red" : `green`} color={blocked === true ? "Red" : `Green`}>
+                    {blocked === true ? "Buzzer Désactivé" : `Buzzer Activé`} {blocked === true ? <Icon as={AiFillCloseCircle} /> : <Icon as={AiFillCheckCircle} />}
+                  </Badge>
+                </div>
+              )}
             </ListItem>
           </motion.div>
         ))}
       </List>
     </VStack>
+  );
+}
+
+function DisablePlayer({ id, blocked }: { id: string; blocked: boolean }) {
+  const { mutate: updateGuest } = useUpdateGuest(id);
+
+  const toggleDisable = async (e: any) => {
+    e.preventDefault();
+    const blocked = e.target.elements.blocked.checked!;
+    updateGuest({ blocked });
+  };
+
+  return (
+    <form onSubmit={toggleDisable}>
+      <VisuallyHiddenInput name="blocked" checked={!blocked}></VisuallyHiddenInput>
+      <Button
+        size="xs"
+        type="submit"
+        rightIcon={blocked === true ? <Icon as={AiFillCheckCircle} /> : <Icon as={AiFillCloseCircle} />}
+        colorScheme={blocked === true ? "green" : "red"}
+      >
+        {blocked === true ? "Activer" : `Désactiver`}
+      </Button>
+    </form>
   );
 }
 
