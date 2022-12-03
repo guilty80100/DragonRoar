@@ -128,7 +128,7 @@ function GuestWhoDidNotBuzzList() {
 
 function User({ name, lastAlive }: { name: string, lastAlive: Timestamp | null }) {
   const TEN_SECONDS = 1000 * 10;
-  let isOnline = lastAlive && (new Date().getTime()  - lastAlive.toDate().getTime()) < TEN_SECONDS;
+  let isOnline = process.env.REACT_APP_DISABLE_ONLINE_CHECK === "true" || (lastAlive && (new Date().getTime()  - lastAlive.toDate().getTime()) < TEN_SECONDS);
 
   return (
     <Badge p={1} fontSize="sm" colorScheme={ isOnline === true ? "green" : "red"} color={isOnline === true ? "Green" : "Red"}>
