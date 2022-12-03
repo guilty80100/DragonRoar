@@ -32,17 +32,24 @@ const sound = new Audio("/audio/buzz.mp3");
 
 export default function Join() {
   const { id: roomId, hostId } = useRoom();
-  const { mutate: alive } = useAlive();
+  OnlineCheck();
 
-  useEffect(() => {
-    alive();
-    const interval = setInterval(() => {
-      alive();
-    }, 20000);
-    return () => clearInterval(interval);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  function OnlineCheck(){
+      const { mutate: alive } = useAlive();
+      useEffect(() => {
+        if(process.env.REACT_APP_DISABLE_ONLINE_CHECK === "true"){
+          alive();
+          const interval = setInterval(() => {
+            alive();
+          }, 20000);
+          return () => clearInterval(interval);
+        }else{
+          console.log('tracking disabled');
+        }
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+  }
 
   return (
     <Flex direction="column" h={window.innerHeight}>
