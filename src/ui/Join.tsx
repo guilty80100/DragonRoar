@@ -24,14 +24,25 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useRef } from "react";
-import { useBuzz, useGuest, useRoom, useUpdateGuest } from "../hooks";
+import React, { useRef, useEffect } from "react";
+import { useAlive, useBuzz, useGuest, useRoom, useUpdateGuest } from "../hooks";
 import { GuestList } from ".";
 
 const sound = new Audio("/audio/buzz.mp3");
 
 export default function Join() {
   const { id: roomId, hostId } = useRoom();
+  const { mutate: alive } = useAlive();
+
+  useEffect(() => {
+    alive();
+    const interval = setInterval(() => {
+      alive();
+    }, 20000);
+    return () => clearInterval(interval);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Flex direction="column" h={window.innerHeight}>
