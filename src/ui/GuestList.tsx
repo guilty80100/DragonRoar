@@ -25,6 +25,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useUpdateGuest, useGuestList, useIsHost } from "../hooks";
+import { Timestamp } from "firebase/firestore";
 
 const spring = { type: "spring", stiffness: 500, damping: 30 };
 
@@ -53,10 +54,10 @@ function GuestWhoBuzzedList() {
       </Text>
       <Divider />
       <List spacing={3} overflowX="auto" width="100%">
-        {items.map(({ id, name, buzzed, score, blocked }, idx) => (
+        {items.map(({ id, name, buzzed, score, blocked, lastAlive }, idx) => (
           <motion.div key={id} layoutId={id} transition={spring}>
             <ListItem>
-              <Text>{name}</Text>
+              <User name={name} lastAlive={lastAlive}></User>
               <Box m={1} />
               <Text p={1} fontSize="sm" color="pink.500">
                 {idx > 0
@@ -96,10 +97,10 @@ function GuestWhoDidNotBuzzList() {
       </Text>
       <Divider />
       <List spacing={3} overflowX="auto" width="100%">
-        {items.map(({ id, name, score, blocked }) => (
+        {items.map(({ id, name, score, blocked, lastAlive }) => (
           <motion.div key={id} layoutId={id} transition={spring}>
             <ListItem>
-              <Text>{name}</Text>
+              <User name={name} lastAlive={lastAlive}></User>
               <Box m={1} />
               {isHost ? (
                 <EditScore id={id} score={score} />
@@ -125,6 +126,17 @@ function GuestWhoDidNotBuzzList() {
   );
 }
 
+function User({ name, lastAlive }: { name: string, lastAlive: Timestamp | null }) {
+  const TEN_SECONDS = 1000 * 10;
+  let isOnline = lastAlive && (new Date().getTime()  - lastAlive.toDate().getTime()) < TEN_SECONDS;
+
+  return (
+    <Badge p={1} fontSize="sm" colorScheme={ isOnline === true ? "green" : "red"} color={isOnline === true ? "Green" : "Red"}>
+      {name} {isOnline === true ? <Icon as={AiFillCheckCircle} /> : <Icon as={AiFillCloseCircle} />}
+    </Badge>
+  );
+}
+
 function DisablePlayer({ id, blocked }: { id: string; blocked: boolean }) {
   const { mutate: updateGuest } = useUpdateGuest(id);
 
@@ -136,7 +148,7 @@ function DisablePlayer({ id, blocked }: { id: string; blocked: boolean }) {
 
   return (
     <form onSubmit={toggleDisable}>
-      <VisuallyHiddenInput name="blocked" checked={!blocked}></VisuallyHiddenInput>
+      <VisuallyHiddenInput name="blocked" checked={!blocked} readOnly={true}></VisuallyHiddenInput>
       <Button
         size="xs"
         type="submit"
