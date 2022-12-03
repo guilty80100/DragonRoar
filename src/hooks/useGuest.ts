@@ -8,6 +8,7 @@ type Guest = {
   name: string;
   buzzed: Timestamp | null;
   blocked: boolean;
+  lastAlive: Timestamp | null;
   score: number;
 };
 
