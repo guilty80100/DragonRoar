@@ -49,8 +49,8 @@ function GuestWhoBuzzedList() {
 
   return (
     <VStack alignItems="start" overflowX="auto">
-      <Text color="teal.500" as="b">
-        Buzzed
+      <Text color="red.500" as="b">
+        As rugis
       </Text>
       <Divider />
       <List spacing={3} overflowX="auto" width="100%">
@@ -59,7 +59,7 @@ function GuestWhoBuzzedList() {
             <ListItem>
               <User name={name} lastAlive={lastAlive}></User>
               <Box m={1} />
-              <Text p={1} fontSize="sm" color="pink.500">
+              <Text p={1} fontSize="sm" color="red.500">
                 {idx > 0
                   ? `+${buzzed?.toMillis()! - items[0]!.buzzed!.toMillis()}  ms`
                   : "🏆"}
@@ -70,7 +70,7 @@ function GuestWhoBuzzedList() {
                   <DisablePlayer id={id} blocked={blocked} />
                 </div>
               ): (
-                <Text p={1} fontSize="sm" color="pink.500">
+                <Text p={1} fontSize="sm" color="red.500">
                   {score === 1 ? "1 point" : `${score} points`}
                 </Text>
               )}
@@ -92,8 +92,8 @@ function GuestWhoDidNotBuzzList() {
 
   return (
     <VStack alignItems="start" overflowX="auto">
-      <Text color="teal.500" as="b">
-        Not buzzed yet
+      <Text color="red.500" as="b">
+        N'as pas encore rugis
       </Text>
       <Divider />
       <List spacing={3} overflowX="auto" width="100%">
@@ -105,7 +105,7 @@ function GuestWhoDidNotBuzzList() {
               {isHost ? (
                 <EditScore id={id} score={score} />
               ) : (
-                <Text p={1} fontSize="sm" color="pink.500">
+                <Text p={1} fontSize="sm" color="red.500">
                   {score === 1 ? "1 point" : `${score} points`}
                 </Text>
               )}
@@ -114,7 +114,7 @@ function GuestWhoDidNotBuzzList() {
               ) : (
                 <div>
                   <Badge p={1} fontSize="sm" colorScheme={blocked === true ? "red" : `green`} color={blocked === true ? "Red" : `Green`}>
-                    {blocked === true ? "Buzzer Désactivé" : `Buzzer Activé`} {blocked === true ? <Icon as={AiFillCloseCircle} /> : <Icon as={AiFillCheckCircle} />}
+                    {blocked === true ? "Rugissement interdit" : `Rugissement autorisé`} {blocked === true ? <Icon as={AiFillCloseCircle} /> : <Icon as={AiFillCheckCircle} />}
                   </Badge>
                 </div>
               )}
@@ -177,7 +177,7 @@ function EditScore({ id, score }: { id: string; score: number }) {
     <Button
       size="xs"
       rightIcon={<Icon as={AiOutlinePlusCircle} />}
-      colorScheme="pink"
+      colorScheme="red"
       onClick={onOpen}
     >
       {score === 1 ? "1 point" : `${score} points`}
@@ -185,11 +185,11 @@ function EditScore({ id, score }: { id: string; score: number }) {
         <ModalOverlay />
         <ModalContent>
           <form onSubmit={confirmEdit}>
-            <ModalHeader>Edit Score</ModalHeader>
+            <ModalHeader>Editer le Score</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <FormControl>
-                <FormLabel>New score</FormLabel>
+                <FormLabel>Nouveau score</FormLabel>
                 <NumberInput name="score" defaultValue={score} ref={initialRef}>
                   <NumberInputField />
                 </NumberInput>
@@ -198,10 +198,10 @@ function EditScore({ id, score }: { id: string; score: number }) {
 
             <ModalFooter>
               <Button variant="ghost" onClick={onClose}>
-                Cancel
+                Annuler
               </Button>
-              <Button colorScheme="teal" type="submit">
-                Confirm
+              <Button colorScheme="red" type="submit">
+                Confirmer
               </Button>
             </ModalFooter>
           </form>

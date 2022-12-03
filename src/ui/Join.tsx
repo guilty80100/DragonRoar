@@ -28,7 +28,7 @@ import React, { useRef, useEffect } from "react";
 import { useAlive, useBuzz, useGuest, useRoom, useUpdateGuest } from "../hooks";
 import { GuestList } from ".";
 
-const sound = new Audio("/audio/buzz.mp3");
+const sound = new Audio("/audio/dragon.mp3");
 
 export default function Join() {
   const { id: roomId, hostId } = useRoom();
@@ -53,7 +53,7 @@ export default function Join() {
 
   return (
     <Flex direction="column" h={window.innerHeight}>
-      <HStack px={5} h="58px" bg="teal.500" shadow="base">
+      <HStack px={5} h="58px" bg="red.500" shadow="base">
         <CloseButton
           color="white"
           size="lg"
@@ -63,7 +63,7 @@ export default function Join() {
           }}
         />
         <Heading color="white" size="md">
-          Room number: {roomId}
+          Salle des dragons : {roomId}
         </Heading>
       </HStack>
       {!hostId ? (
@@ -76,10 +76,10 @@ export default function Join() {
           >
             <AlertIcon boxSize="40px" />
             <AlertTitle mt={4} mb={1} fontSize="lg">
-              This room number does not exist
+              Cette salles des dragons n'existe pas !
             </AlertTitle>
             <AlertDescription>
-              Try navigating back and use a different one
+              Reviens en arrière en rejoins en une autre !
             </AlertDescription>
           </Alert>
         </>
@@ -115,7 +115,7 @@ function Actions() {
             sound.play();
           }}
         >
-          Buzz!
+          Rugis !
         </Button>
       </Center>
     </>
@@ -136,31 +136,31 @@ function EditName({ id, name }: { id: string; name: string }) {
 
   return (
     <Button
-      colorScheme="pink"
+      colorScheme="red"
       variant="ghost"
       rightIcon={<Icon as={AiFillEdit} />}
       onClick={onOpen}
     >
-      Name: {name}
+      Nom : {name}
       <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef}>
         <ModalOverlay />
         <ModalContent>
           <form onSubmit={confirmEdit}>
-            <ModalHeader>Edit Name</ModalHeader>
+            <ModalHeader>Comment te nommes-tu, jeune dragon ?</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <FormControl>
-                <FormLabel>New name</FormLabel>
+                <FormLabel>Mon nom</FormLabel>
                 <Input name="name" defaultValue={name} ref={initialRef} />
               </FormControl>
             </ModalBody>
 
             <ModalFooter>
               <Button variant="ghost" onClick={onClose}>
-                Cancel
+                Annuler
               </Button>
-              <Button colorScheme="teal" type="submit">
-                Confirm
+              <Button colorScheme="red" type="submit">
+                Confirmer
               </Button>
             </ModalFooter>
           </form>

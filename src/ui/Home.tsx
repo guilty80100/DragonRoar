@@ -26,10 +26,10 @@ export default function Home() {
 
   return (
     <Flex direction="column" h={window.innerHeight}>
-      <HStack px={5} h="58px" bg="teal.500" shadow="base">
+      <HStack px={5} h="58px" bg="red.500" shadow="base">
         <Icon as={AiFillFire} w="30px" h="30px" color="white" />
         <Heading color="white" size="md">
-          Firebuzz
+          Dragon Roar
         </Heading>
       </HStack>
       <Box m={8} />
@@ -44,19 +44,19 @@ export default function Home() {
         >
           <form>
             <VStack p={4} align="start" spacing={8}>
-              <Heading size="sm">Join a game</Heading>
-              <Flex w="258px" align="center">
+              <Heading size="sm">Rejoindre une salle des dragons</Heading>
+              <Flex w="300px" align="center">
                 <FormControl isRequired>
                   <Input
                     name="roomId"
                     variant="flushed"
-                    placeholder="Room number"
+                    placeholder="Numéro de la salle"
                     maxW="40"
                   />
                 </FormControl>
                 <Spacer />
-                <Button variant="outline" colorScheme="teal" type="submit">
-                  Join
+                <Button variant="outline" colorScheme="red" type="submit">
+                  Rejoindre
                 </Button>
               </Flex>
             </VStack>
@@ -71,17 +71,17 @@ export default function Home() {
           borderColor="gainsboro"
         >
           <VStack p={4} align="start" spacing={8}>
-            <Heading size="sm">Host a game</Heading>
-            <Flex w="258px" align="center">
-              <Text>Create a new room</Text>
+            <Heading size="sm">Devenir le maître Dragon d'une salle</Heading>
+            <Flex w="290px" align="center">
+              <Text>Créer une salle des Dragons</Text>
               <Input name="roomId" type="hidden" value="" />
               <Spacer />
               <Button
                 variant="outline"
-                colorScheme="teal"
+                colorScheme="red"
                 onClick={() => createRoom()}
               >
-                Host
+                Créer
               </Button>
             </Flex>
           </VStack>
@@ -96,8 +96,7 @@ export default function Home() {
           borderColor="gainsboro"
         >
           <Text fontSize="sm" colorScheme="gray">
-            💡 Tip: you can re-join the same room again without losing your
-            progress
+            💡 Astuce : Vous pouvez rejoindre la même salle, encore et encore, sans perdre vos points.
           </Text>
         </Box>
       </VStack>

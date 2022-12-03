@@ -17,14 +17,14 @@ import { useRoom, useClearBuzzers, useGuestList } from "../hooks";
 import { GuestList } from ".";
 import { useEffect } from "react";
 
-const sound = new Audio("/audio/buzz.mp3");
+const sound = new Audio("/audio/dragon.mp3");
 
 export default function Host() {
   const { id: roomId, hostId } = useRoom();
 
   return (
     <Flex direction="column" h={window.innerHeight}>
-      <HStack px={5} h="58px" bg="teal.500" shadow="base">
+      <HStack px={5} h="58px" bg="red.500" shadow="base">
         <CloseButton
           color="white"
           size="lg"
@@ -34,7 +34,7 @@ export default function Host() {
           }}
         />
         <Heading color="white" size="md">
-          Room number: {roomId}
+          Salle des dragons : {roomId}
         </Heading>
       </HStack>
       {!hostId ? (
@@ -47,10 +47,10 @@ export default function Host() {
           >
             <AlertIcon boxSize="40px" />
             <AlertTitle mt={4} mb={1} fontSize="lg">
-              This room number is no longer vailable
+              La salle des dragons n'est plus disponible !
             </AlertTitle>
             <AlertDescription>
-              Try navigating back and create a new one
+              Reviens en arrière et recréé en une !
             </AlertDescription>
           </Alert>
         </>
@@ -81,17 +81,17 @@ function Actions() {
     <>
       <HStack px={4} py={1} spacing="-5px">
         <Text color="pink.500" p={2}>
-          You are the host
+          Vous êtes le maître Dragon
         </Text>
       </HStack>
       <Box m={4} />
       <Center>
         <Button
-          colorScheme="pink"
+          colorScheme="red"
           disabled={guestList.every(({ buzzed }) => !buzzed)}
           onClick={() => clearBuzzers()}
         >
-          Clear Buzzers
+          Autorise les dragons à rugir à nouveau
         </Button>
       </Center>
     </>
