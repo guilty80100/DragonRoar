@@ -28,8 +28,6 @@ import React, { useRef, useEffect } from "react";
 import { useAlive, useBuzz, useGuest, useRoom, useUpdateGuest } from "../hooks";
 import { GuestList } from ".";
 
-const sound = new Audio("/audio/dragon.mp3");
-
 export default function Join() {
   const { id: roomId, hostId } = useRoom();
   OnlineCheck();
@@ -112,7 +110,6 @@ function Actions() {
           isDisabled={!!buzzed || !!blocked}
           onClick={() => {
             buzz();
-            sound.play();
           }}
         >
           Rugis !

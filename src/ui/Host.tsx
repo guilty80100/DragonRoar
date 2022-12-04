@@ -15,9 +15,6 @@ import {
 import React from "react";
 import { useRoom, useClearBuzzers, useGuestList } from "../hooks";
 import { GuestList } from ".";
-import { useEffect } from "react";
-
-const sound = new Audio("/audio/dragon.mp3");
 
 export default function Host() {
   const { id: roomId, hostId } = useRoom();
@@ -66,16 +63,8 @@ export default function Host() {
 }
 
 function Actions() {
-  const guestList = useGuestList();
   const { mutate: clearBuzzers } = useClearBuzzers();
-  const shouldPlaySound =
-    guestList.filter(({ buzzed }) => !!buzzed).length === 1;
-
-  useEffect(() => {
-    if (shouldPlaySound) {
-      sound.play();
-    }
-  }, [shouldPlaySound]);
+  const guestList = useGuestList();
 
   return (
     <>

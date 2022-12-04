@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion, AnimateSharedLayout } from "framer-motion";
 import { AiOutlinePlusCircle, AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import { Badge, List, ListItem } from "@chakra-ui/layout";
@@ -28,6 +28,7 @@ import { useUpdateGuest, useGuestList, useIsHost } from "../hooks";
 import { Timestamp } from "firebase/firestore";
 
 const spring = { type: "spring", stiffness: 500, damping: 30 };
+const sound = new Audio("/audio/dragon.mp3");
 
 export default function GuestList() {
   return (
@@ -46,6 +47,14 @@ function GuestWhoBuzzedList() {
   const items = guestList
     .filter(({ buzzed }) => !!buzzed)
     .sort((a, b) => a.buzzed!.toMillis() - b.buzzed!.toMillis());
+
+  const shouldPlaySound = guestList.filter(({ buzzed }) => !!buzzed).length === 1;
+
+  useEffect(() => {
+    if (shouldPlaySound) {
+      sound.play();
+    }
+  }, [shouldPlaySound]);
 
   return (
     <VStack alignItems="start" overflowX="auto">
