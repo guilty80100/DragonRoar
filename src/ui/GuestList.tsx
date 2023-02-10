@@ -59,7 +59,7 @@ function GuestWhoBuzzedList() {
   return (
     <VStack alignItems="start" overflowX="auto">
       <Text color="red.500" as="b">
-        As rugis
+        A rugis
       </Text>
       <Divider />
       <List spacing={3} overflowX="auto" width="100%">
@@ -102,7 +102,7 @@ function GuestWhoDidNotBuzzList() {
   return (
     <VStack alignItems="start" overflowX="auto">
       <Text color="red.500" as="b">
-        N'as pas encore rugis
+        N'a pas encore rugis
       </Text>
       <Divider />
       <List spacing={3} overflowX="auto" width="100%">
